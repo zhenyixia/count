@@ -1,0 +1,19 @@
+server:
+  port: 8081
+  address: 127.0.0.1
+  tomcat:
+    uri-encoding: UTF-8
+
+mybatis:
+  config-location: classpath:config/mybatis-config.xml
+  mapper-locations: classpath:mappers/*.xml
+  type-aliases-package: com.lyp.count
+
+spring:
+  datasource:
+      username: root
+      password: aaaaaa
+      url: jdbc:mysql://localhost:3306/springboot01?serverTimeZone=UTC&characterEncoding=utf8
+      driver-class-name: com.mysql.jdbc.Driver
+
+
