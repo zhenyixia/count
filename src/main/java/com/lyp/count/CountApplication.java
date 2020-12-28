@@ -8,7 +8,7 @@ import org.springframework.context.annotation.PropertySource;
 
 @SpringBootApplication
 @MapperScan("com.lyp.count.*.mapper")
-@PropertySource(name = "EncryptedProperties", value = "classpath:encrypted.yml")
+//@PropertySource(name = "EncryptedProperties", value = "classpath:encrypted.yml")
 public class CountApplication {
 
 	public static void main(String[] args) {

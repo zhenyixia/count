@@ -32,4 +32,4 @@ build/
 ### VS Code ###
 .vscode/
 
-src/main/**/encrypted.yml
+src/main/**/application-dev.yml

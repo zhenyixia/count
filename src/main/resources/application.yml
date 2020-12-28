@@ -10,6 +10,9 @@ mybatis:
   type-aliases-package: com.lyp.count
 
 spring:
+  profiles:
+    active: dev
+
   datasource:
       username: root
       password: ENC(ey/INZfInTEGpFnu23IabA==)
