@@ -8,10 +8,10 @@ import lombok.Data;
 public class Page {
 
   @Min(value = 1, message = "最小值不能小于1")
-  private int page;
+  private int pageNum;
 
   @Min(value = 1, message = "最小值不能小于1")
-  private Integer size;
+  private Integer pageSize;
 
   @JsonIgnore
   private Integer beginIndex;
