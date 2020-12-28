@@ -12,7 +12,7 @@ mybatis:
 spring:
   datasource:
       username: root
-      password: aaaaaa
+      password: ENC(ey/INZfInTEGpFnu23IabA==)
       url: jdbc:mysql://localhost:3306/springboot01?serverTimeZone=UTC&characterEncoding=utf8
       driver-class-name: com.mysql.jdbc.Driver
 
