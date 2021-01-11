@@ -2,6 +2,7 @@ package com.lyp.count.run.service.impl;
 
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.lyp.count.common.bean.JsonResult;
 import com.lyp.count.run.bean.QueryRunVO;
 import com.lyp.count.run.bean.RunCountDetail;
@@ -20,9 +21,9 @@ public class RunCountServiceImpl implements RunCountService {
 
   @Override
   public JsonResult getList(QueryRunVO queryVO) {
-    Page pages = PageHelper.startPage(queryVO.getPageNum(),queryVO.getPageSize());
+    Page pages = PageHelper.startPage(queryVO.getPageNum(), queryVO.getPageSize());
     List<RunCountDetail> runCountDetails = runCountDao.selectByCondition();
-    log.info("Page total:{}.",pages.getTotal());
-    return JsonResult.success("查询成功", runCountDetails);
+    log.info("Page total:{}.", pages.getTotal());
+    return JsonResult.success("查询成功", new PageInfo<>(runCountDetails));
   }
 }
