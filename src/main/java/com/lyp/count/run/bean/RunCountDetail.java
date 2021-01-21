@@ -27,7 +27,7 @@ public class RunCountDetail {
   /**
    * 平均配速，即每公里用时，如8分11秒每公里
    */
-  private BigDecimal timeByKm;
+  private String timeByKm;
 
   @JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")
   private Date runDate;
