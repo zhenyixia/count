@@ -26,4 +26,10 @@ public class RunCountServiceImpl implements RunCountService {
     log.info("Page total:{}.", pages.getTotal());
     return JsonResult.success("查询成功", new PageInfo<>(runCountDetails));
   }
+
+  @Override
+  public JsonResult add(List<RunCountDetail> runCountVOs) {
+    int num = runCountDao.batchInsert(runCountVOs);
+    return JsonResult.success("成功添加条数为：" + num);
+  }
 }

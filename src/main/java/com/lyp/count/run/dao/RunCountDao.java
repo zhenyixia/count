@@ -9,4 +9,5 @@ public interface RunCountDao {
 
   List<RunCountDetail> selectByCondition();
 
+  int batchInsert(List<RunCountDetail> runCountVOs);
 }

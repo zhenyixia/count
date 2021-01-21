@@ -4,9 +4,23 @@
 	<sql id="Base_Column_List">
     id, kilometer, address, run_date, run_second, time_by_km, km_by_hour, update_time
   </sql>
+	<insert id="batchInsert">
+		insert into tbl_run_detail (kilometer, address,
+		run_date, run_second, time_by_km,
+		km_by_hour)
+		values
+		<foreach collection="list" item="item" separator=",">
+			(
+			#{item.kilometer}, #{item.address}, #{item.runDate},
+			#{item.runSecond}, #{item.timeByKm},#{item.kmByHour}
+			)
+		</foreach>
+	</insert>
 
 	<select id="selectByCondition" resultType="com.lyp.count.run.bean.RunCountDetail">
-		select	<include refid="Base_Column_List"/>	from tbl_run_detail
+		select
+		<include refid="Base_Column_List"/>
+		from tbl_run_detail
 		<where>
 			<if test="year != null">
 				and year(run_date) = #{year}
