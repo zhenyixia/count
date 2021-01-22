@@ -3,6 +3,8 @@ package com.lyp.count.run.bean;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import java.math.BigDecimal;
 import java.util.Date;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 import lombok.Data;
 
 @Data
@@ -29,7 +31,8 @@ public class RunCountDetail {
    */
   private String timeByKm;
 
-  @JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")
-  private Date runDate;
+  @NotNull
+  @Pattern(regexp = "^\\d{4}-\\d{2}-\\d{2}$",message = "跑步日期格式必须是：yyyy-MM-dd")
+  private String runDate;
 
 }

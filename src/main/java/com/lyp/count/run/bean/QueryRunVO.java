@@ -5,11 +5,13 @@ import java.util.Date;
 import lombok.Data;
 
 @Data
-public class QueryRunVO extends Page{
+public class QueryRunVO extends Page {
 
   private Long id;
 
   private String address;
+
+  private String runDate;
 
   private Integer year;
 
