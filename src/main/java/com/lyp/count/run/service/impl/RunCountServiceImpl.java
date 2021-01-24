@@ -8,6 +8,10 @@ import com.lyp.count.run.bean.QueryRunVO;
 import com.lyp.count.run.bean.RunCountDetail;
 import com.lyp.count.run.dao.RunCountDao;
 import com.lyp.count.run.service.RunCountService;
+import java.time.DayOfWeek;
+import java.time.LocalDate;
+import java.time.temporal.TemporalAdjuster;
+import java.time.temporal.TemporalAdjusters;
 import java.util.List;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,5 +35,27 @@ public class RunCountServiceImpl implements RunCountService {
   public JsonResult add(List<RunCountDetail> runCountVOs) {
     int num = runCountDao.batchInsert(runCountVOs);
     return JsonResult.success("成功添加条数为：" + num);
+  }
+
+  @Override
+  public JsonResult count(QueryRunVO queryVO) {
+    return null;
+  }
+
+  @Override
+  public JsonResult countWeek(int weekIndex) {
+    if (weekIndex < 0) {
+      return JsonResult.validFail("参数非法");
+    }
+
+    // 获取当前周的周一的日期
+    LocalDate currentWeekStartDay = LocalDate.now().with(TemporalAdjusters.previous(DayOfWeek.SUNDAY)).plusDays(1);
+
+    // 获取上一周或几周的周一的日期
+    LocalDate specialMonday = currentWeekStartDay.minusWeeks(weekIndex);
+    LocalDate specialSunday = specialMonday.plusDays(6);
+    List<String> oneWeekCount = runCountDao.selectSpecialWeek(specialMonday.toString(), specialSunday.toString());
+
+    return JsonResult.success("查询成功", oneWeekCount);
   }
 }

@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -31,5 +32,11 @@ public class RunCountController {
   @PostMapping(value = "add")
   public JsonResult add(@RequestBody List<RunCountDetail> runCountVOs) {
     return runCountService.add(runCountVOs);
+  }
+
+  // http://127.0.0.1:8081/run/countWeek?weekIndex=0
+  @GetMapping(value = "countWeek")
+  public JsonResult countWeek(@RequestParam(value = "weekIndex") int weekIndex) {
+    return runCountService.countWeek(weekIndex);
   }
 }

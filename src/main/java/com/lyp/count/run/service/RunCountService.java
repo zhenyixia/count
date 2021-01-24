@@ -10,4 +10,8 @@ public interface RunCountService {
   JsonResult getList(QueryRunVO queryVO);
 
   JsonResult add(List<RunCountDetail> runCountVOs);
+
+  JsonResult count(QueryRunVO queryVO);
+
+  JsonResult countWeek(int weekIndex);
 }
