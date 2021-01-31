@@ -27,7 +27,7 @@ public class JsonResult {
 
   private int status;
 
-  private String msg;
+  private String message;
 
   private Object data;
 
@@ -35,9 +35,9 @@ public class JsonResult {
 
   }
 
-  private JsonResult(int status, String msg, Object data) {
+  private JsonResult(int status, String message, Object data) {
     this.status = status;
-    this.msg = msg;
+    this.message = message;
     this.data = data;
   }
 
