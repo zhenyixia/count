@@ -1,17 +1,25 @@
 package com.lyp.count.run.bean;
 
+import java.util.List;
 import lombok.Data;
 
 @Data
-public class CountVO {
+public class CountVO{
   /**
-   * 统计单位，如一周的周一到周天。一月的1号到31号。一年的1月到12月。所有年。
+   * 单位集合，如一周，则为：一，二，。。。，日；一月则为：1,2,3,...31等
    */
-  private String countUnit;
+  private List<String> units;
 
   /**
-   * 统计单位里的里程数
+   * 对应单位的统计值，如一周，则为：1.2,3.4,0,0,0,0,0等，对应上面的单位
    */
-  private String sum;
+  private List<String> kmList;
 
+  private String total;
+
+  public CountVO(List<String> units, List<String> kmList, String total){
+    this.units = units;
+    this.kmList = kmList;
+    this.total = total;
+  }
 }

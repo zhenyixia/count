@@ -6,12 +6,14 @@
   </sql>
 	<insert id="batchInsert">
 		insert into tbl_run_detail (kilometer, address,
-		run_date, run_second, time_by_km,
+		run_date, `year`, `month`, `day`, week_day, run_second, time_by_km,
 		km_by_hour)
 		values
 		<foreach collection="list" item="item" separator=",">
 			(
 			#{item.kilometer}, #{item.address}, #{item.runDate},
+			#{item.year,jdbcType=INTEGER}, #{item.month,jdbcType=INTEGER},
+			#{item.day,jdbcType=INTEGER}, #{item.weekDay,jdbcType=VARCHAR},
 			#{item.runSecond}, #{item.timeByKm},#{item.kmByHour}
 			)
 		</foreach>
@@ -23,10 +25,10 @@
 		from tbl_run_detail
 		<where>
 			<if test="year != null">
-				and year(run_date) = #{year}
+				and `year` = #{year}
 			</if>
 			<if test="month != null">
-				and month(run_date) = #{month}
+				and `month` = #{month}
 			</if>
 		</where>
 	</select>
@@ -34,6 +36,11 @@
 		select sum(kilometer) from tbl_run_detail
 		where run_date &gt;= #{specialMonday} and run_date &lt;= #{specialSunday}
 		group by run_date
+	</select>
+	<select id="countByMonth" resultType="com.lyp.count.run.bean.RunCountDetail">
+		SELECT sum(kilometer) kilometer, `year`, `month`, `day`, run_date FROM tbl_run_detail
+		where `year` =#{year} and `month` =#{month}
+		group BY DAY
 	</select>
 
 </mapper>
