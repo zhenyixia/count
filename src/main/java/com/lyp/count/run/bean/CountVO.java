@@ -15,11 +15,11 @@ public class CountVO{
    */
   private List<String> kmList;
 
-  private String total;
+  private String totalKms;
 
   public CountVO(List<String> units, List<String> kmList, String total){
     this.units = units;
     this.kmList = kmList;
-    this.total = total;
+    this.totalKms = total;
   }
 }

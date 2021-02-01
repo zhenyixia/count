@@ -107,7 +107,7 @@ public class SportUtils{
       units.add(i + "");
     }
 
-    BigDecimal total = new BigDecimal(0);
+    BigDecimal totalKms = new BigDecimal(0);
     List<String> kmList = new ArrayList<>(Collections.nCopies(length, "0"));
     for(RunCountDetail countVO : countVOS){
 
@@ -119,11 +119,11 @@ public class SportUtils{
       }
 
       BigDecimal kilometer = countVO.getKilometer();
-      total = total.add(kilometer);
+      totalKms = totalKms.add(kilometer);
 
       kmList.set(index, kilometer.toString());
     }
 
-    return new CountVO(units, kmList, total.setScale(1, RoundingMode.HALF_UP).toString());
+    return new CountVO(units, kmList, totalKms.setScale(1, RoundingMode.HALF_UP).toString());
   }
 }

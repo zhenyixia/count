@@ -34,7 +34,7 @@ public class RunCountServiceImpl implements RunCountService{
   public JsonResult getList(QueryRunVO queryVO){
     Page pages = PageHelper.startPage(queryVO.getPageNum(), queryVO.getPageSize());
     List<RunCountDetail> runCountDetails = runCountDao.selectByCondition();
-    log.info("Page total:{}.", pages.getTotal());
+    log.info("Page totalKms:{}.", pages.getTotal());
     return JsonResult.success("查询成功", new PageInfo<>(runCountDetails));
   }
 
