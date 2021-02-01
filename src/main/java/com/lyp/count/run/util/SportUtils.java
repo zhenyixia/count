@@ -11,6 +11,10 @@ import java.time.LocalDate;
 import java.time.Month;
 import java.time.Year;
 import java.time.format.DateTimeFormatter;
+import java.time.temporal.Temporal;
+import java.time.temporal.TemporalAdjuster;
+import java.time.temporal.TemporalAdjusters;
+import java.time.temporal.TemporalUnit;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -93,11 +97,11 @@ public class SportUtils{
   }
 
   public static CountVO processMonthCount(List<RunCountDetail> countVOS) throws MyException{
-    if(CollectionUtils.isEmpty(countVOS)){
-      return null;
+    LocalDate now = LocalDate.now();
+    if(!CollectionUtils.isEmpty(countVOS)){
+      now = LocalDate.of(countVOS.get(0).getYear(),countVOS.get(0).getMonth(),1);
     }
-    Month month = Month.of(countVOS.get(0).getMonth());
-    int length = month.length(Year.of(countVOS.get(0).getYear()).isLeap());
+    int length =now.with(TemporalAdjusters.lastDayOfMonth()).getDayOfMonth();
     List<String> units = new ArrayList<>(length);
     for(int i = 1; i <= length; i++){
       units.add(i + "");
