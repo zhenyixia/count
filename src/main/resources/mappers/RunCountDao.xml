@@ -42,5 +42,13 @@
 		where `year` =#{year} and `month` =#{month}
 		group BY DAY
 	</select>
+	<select id="selectYearMonthScope" resultType="com.lyp.count.run.bean.YearMonthScopeVO">
+			SELECT MAX(yearMonth) maxYearMonth,MIN(yearMonth) minYearMonth,MAX(YEAR) maxYear,MIN(YEAR) minYear FROM
+			(SELECT YEAR*100+MONTH yearMonth,YEAR FROM tbl_run_detail) t
+	</select>
+	<select id="selectTotalRunTime" resultType="java.lang.Integer">
+		SELECT  COUNT(id) FROM tbl_run_detail
+		where `year` =#{year} and `month` =#{month}
+	</select>
 
 </mapper>

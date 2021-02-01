@@ -10,6 +10,7 @@ import com.lyp.count.run.bean.CountVO;
 import com.lyp.count.run.bean.QueryRunVO;
 import com.lyp.count.run.bean.RunCountDetail;
 import com.lyp.count.run.bean.RunDetailVO;
+import com.lyp.count.run.bean.YearMonthScopeVO;
 import com.lyp.count.run.constant.Common;
 import com.lyp.count.run.dao.RunCountDao;
 import com.lyp.count.run.service.RunCountService;
@@ -101,9 +102,21 @@ public class RunCountServiceImpl implements RunCountService{
     List<RunCountDetail> countVOS = runCountDao.countByMonth(year, month);
     try{
       CountVO countVO = SportUtils.processMonthCount(countVOS);
+      int totalTime = runCountDao.selectTotalRunTime(year, month);
+      countVO.setTotalTimes(totalTime);
       return JsonResult.success("按月统计成功！", countVO);
     }catch(MyException e){
       return JsonResult.fail(e.getMessage());
     }
+  }
+
+  @Override
+  public JsonResult getYearMonthScope(){
+
+    log.info("Begin to select year month scope.");
+    YearMonthScopeVO scopeVO = runCountDao.selectYearMonthScope();
+
+    log.info("Query successfully.");
+    return JsonResult.success("查询年月范围成功", scopeVO);
   }
 }

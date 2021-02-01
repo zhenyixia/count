@@ -25,4 +25,11 @@ public interface RunCountService{
    * @return JsonResult
    */
   JsonResult countByMonth(QueryRunVO queryRunVO);
+
+  /**
+   * 获取年月的范围
+   *
+   * @return JsonResult
+   */
+  JsonResult getYearMonthScope();
 }

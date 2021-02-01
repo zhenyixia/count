@@ -17,6 +17,11 @@ public class CountVO{
 
   private String totalKms;
 
+  /**
+   * 总运动次数
+   */
+  private int totalTimes;
+
   public CountVO(List<String> units, List<String> kmList, String total){
     this.units = units;
     this.kmList = kmList;

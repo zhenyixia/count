@@ -94,4 +94,12 @@ public class RunCountController{
       e.printStackTrace();
     }
   }
+
+
+  @GetMapping(value = "getYearMonthScope")
+  public JsonResult getYearMonthScope(){
+    return runCountService.getYearMonthScope();
+  }
+
+
 }
