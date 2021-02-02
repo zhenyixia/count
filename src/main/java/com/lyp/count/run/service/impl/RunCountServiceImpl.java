@@ -23,6 +23,7 @@ import java.util.Objects;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 @Slf4j
@@ -41,6 +42,12 @@ public class RunCountServiceImpl implements RunCountService{
 
   @Override
   public JsonResult add(List<RunCountDetail> runCountVOs){
+    log.info("Begin to add run data.");
+    if(CollectionUtils.isEmpty(runCountVOs)){
+      log.warn("Input entry data is null.");
+      return JsonResult.fail("录入数据不能为空");
+    }
+
     for(RunCountDetail runCountVO : runCountVOs){
       SportUtils.setTimeInfo(runCountVO, runCountVO.getRunDate());
     }
