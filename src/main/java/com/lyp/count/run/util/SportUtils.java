@@ -26,7 +26,7 @@ import org.apache.commons.lang3.math.NumberUtils;
 
 @Slf4j
 public class SportUtils{
-  private static final String LAST_TIME_REG = "^(\\d+)(\\.)(\\d+)$";
+  private static final String LAST_TIME_REG = "^(\\d+)|((\\d+)(\\.)(\\d+))$";
 
   private static final Pattern lastTimePattern = Pattern.compile(LAST_TIME_REG);
 

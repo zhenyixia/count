@@ -44,7 +44,7 @@ public class RunCountController{
    * @return JsonResult
    */
   @ApiOperation(value = "导入一周的跑步数据")
-  @GetMapping(value = "import")
+  @PostMapping(value = "import")
   public JsonResult importData(MultipartFile file){
     log.info("Begin to come in import data interface.");
     return runCountService.importData(file);

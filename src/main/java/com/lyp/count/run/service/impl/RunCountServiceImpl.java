@@ -55,12 +55,13 @@ public class RunCountServiceImpl implements RunCountService{
     }
 
     try{
-      List<RunDetailVO> detailVOS = ExcelUtils.readList(file, 1, RunDetailVO.class, Common.RUN_HEADS, Common.RUN_HEAD_ATTRS);
+      List<RunDetailVO> detailVOS = ExcelUtils.readList(file, 0, RunDetailVO.class, Common.RUN_HEADS, Common.RUN_HEAD_ATTRS);
       List<RunCountDetail> runDetails = SportUtils.convertRunCountDetail(detailVOS);
 
       int insertNum = runCountDao.batchInsert(runDetails);
       return JsonResult.success("成功导入，条数为：" + insertNum);
     }catch(MyException e){
+      log.error("Batch import failed,msg:{}.", e.getMessage());
       return JsonResult.fail(e.getMessage());
     }
   }

@@ -31,6 +31,7 @@
 				and `month` = #{month}
 			</if>
 		</where>
+		order by year desc,month desc,day desc
 	</select>
 	<select id="selectSpecialWeek" resultType="java.lang.String">
 		select sum(kilometer) from tbl_run_detail

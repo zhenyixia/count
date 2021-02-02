@@ -222,7 +222,7 @@ public class ExcelUtils{
         for(int j = 0, len = heads.length; j < len; j++){
           Cell cell = row.getCell(headInColumnIndexes.get(j));
           String attr = attrs[j];
-          String val = getCellValue2(cell);
+          String val = getCellValue(cell);
           if(StringUtils.isBlank(val)){
             throw new MyException("第" + (i + 1) + "行，第" + (headInColumnIndexes.get(j) + 1) + "列为空。");
           }
