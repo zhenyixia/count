@@ -14,6 +14,7 @@ public interface RunCountService{
 
   JsonResult count(QueryRunVO queryVO);
 
+  @Deprecated
   JsonResult countWeek(int weekIndex);
 
   JsonResult importData(MultipartFile file);

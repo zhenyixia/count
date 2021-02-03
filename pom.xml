@@ -227,14 +227,23 @@
 
 
 	<build>
+		<!--这里写上打成jar包的名称-->
+		<finalName>runCount</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
-				<!--热部署生效，必须添加这个配置，结果证明也不行。。。-->
 				<configuration>
-					<fork>true</fork>
+					<!--这里写上main方法所在类的路径-->
+					<mainClass>com.lyp.count.CountApplication</mainClass>
 				</configuration>
+				<executions>
+					<execution>
+						<goals>
+							<goal>repackage</goal>
+						</goals>
+					</execution>
+				</executions>
 			</plugin>
 
 			<!-- mybatis generator 自动生成代码插件 -->
