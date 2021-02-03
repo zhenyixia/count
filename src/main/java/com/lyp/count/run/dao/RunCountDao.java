@@ -1,5 +1,6 @@
 package com.lyp.count.run.dao;
 
+import com.lyp.count.run.bean.QueryRunVO;
 import com.lyp.count.run.bean.RunCountDetail;
 import com.lyp.count.run.bean.YearMonthScopeVO;
 import java.util.List;
@@ -20,4 +21,6 @@ public interface RunCountDao {
   YearMonthScopeVO selectYearMonthScope();
 
   int selectTotalRunTime(@Param("year") Integer year, @Param("month") Integer month);
+
+  List<RunCountDetail> selectAllMonthByYear(QueryRunVO queryVO);
 }

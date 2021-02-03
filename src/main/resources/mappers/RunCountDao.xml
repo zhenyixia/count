@@ -49,7 +49,14 @@
 	</select>
 	<select id="selectTotalRunTime" resultType="java.lang.Integer">
 		SELECT  COUNT(id) FROM tbl_run_detail
-		where `year` =#{year} and `month` =#{month}
+		where `year` =#{year}
+		<if test="month != null">
+			and `month` =#{month}
+		</if>
+	</select>
+	<select id="selectAllMonthByYear" resultType="com.lyp.count.run.bean.RunCountDetail">
+		select year,month,sum(kilometer) kilometer
+		from tbl_run_detail where year = #{year} group by month
 	</select>
 
 </mapper>

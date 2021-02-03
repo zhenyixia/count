@@ -8,14 +8,10 @@ import com.lyp.count.run.bean.WeekDay;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.time.LocalDate;
-import java.time.Month;
-import java.time.Year;
 import java.time.format.DateTimeFormatter;
-import java.time.temporal.Temporal;
-import java.time.temporal.TemporalAdjuster;
 import java.time.temporal.TemporalAdjusters;
-import java.time.temporal.TemporalUnit;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -99,12 +95,12 @@ public class SportUtils{
   public static CountVO processMonthCount(List<RunCountDetail> countVOS) throws MyException{
     LocalDate now = LocalDate.now();
     if(!CollectionUtils.isEmpty(countVOS)){
-      now = LocalDate.of(countVOS.get(0).getYear(),countVOS.get(0).getMonth(),1);
+      now = LocalDate.of(countVOS.get(0).getYear(), countVOS.get(0).getMonth(), 1);
     }
-    int length =now.with(TemporalAdjusters.lastDayOfMonth()).getDayOfMonth();
-    List<String> units = new ArrayList<>(length);
+    int length = now.with(TemporalAdjusters.lastDayOfMonth()).getDayOfMonth();
+    List<Integer> units = new ArrayList<>(length);
     for(int i = 1; i <= length; i++){
-      units.add(i + "");
+      units.add(i);
     }
 
     BigDecimal totalKms = new BigDecimal(0);
@@ -112,7 +108,7 @@ public class SportUtils{
     for(RunCountDetail countVO : countVOS){
 
       int day = countVO.getDay();
-      int index = units.indexOf(String.valueOf(day));
+      int index = units.indexOf(day);
       if(index == -1){
         log.error("Run data had exception, id is:{}.", countVO.getId());
         throw new MyException("数据异常，请排查,id: {0}.", countVO.getId());
@@ -122,6 +118,33 @@ public class SportUtils{
       totalKms = totalKms.add(kilometer);
 
       kmList.set(index, kilometer.toString());
+    }
+
+    return new CountVO(units, kmList, totalKms.setScale(1, RoundingMode.HALF_UP).toString());
+  }
+
+  /**
+   * 处理按年统计，即统计某一年的所有月
+   *
+   * @param runCountDetails 运动数据，代表某一年的所有月
+   * @return 一个统计对象
+   */
+  public static CountVO processYearCount(List<RunCountDetail> runCountDetails) throws MyException{
+    Integer[] allMonth = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12};
+    List<Integer> units = Arrays.asList(allMonth);
+    List<String> kmList = new ArrayList<>(Collections.nCopies(12, "0"));
+    BigDecimal totalKms = new BigDecimal(0);
+    for(RunCountDetail runCountDetail : runCountDetails){
+      int month = runCountDetail.getMonth();
+      BigDecimal kilometer = runCountDetail.getKilometer();
+      int index = units.indexOf(month);
+      if(index == -1){
+        log.error("Month illegal:{}.", month);
+        throw new MyException("查询出的数据有误，月份不存在：{1}。", month);
+      }
+
+      kmList.set(index, kilometer.toString());
+      totalKms = totalKms.add(kilometer);
     }
 
     return new CountVO(units, kmList, totalKms.setScale(1, RoundingMode.HALF_UP).toString());

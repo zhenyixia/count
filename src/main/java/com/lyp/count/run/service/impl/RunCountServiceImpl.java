@@ -127,4 +127,24 @@ public class RunCountServiceImpl implements RunCountService{
     log.info("Query successfully.");
     return JsonResult.success("查询年月范围成功", scopeVO);
   }
+
+  @Override
+  public JsonResult countByYear(QueryRunVO queryVO){
+    log.info("Begin to count by year.");
+    if(queryVO == null || queryVO.getYear() == 0){
+      return JsonResult.validFail("没有传年份");
+    }
+
+    List<RunCountDetail> runCountDetails = runCountDao.selectAllMonthByYear(queryVO);
+    try{
+      CountVO countVO = SportUtils.processYearCount(runCountDetails);
+      int totalTime = runCountDao.selectTotalRunTime(queryVO.getYear(), null);
+      countVO.setTotalTimes(totalTime);
+
+      log.info("Count all month in one year successfully.");
+      return JsonResult.success("按月统计成功！", countVO);
+    }catch(MyException e){
+      return JsonResult.fail(e.getMessage());
+    }
+  }
 }

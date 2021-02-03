@@ -32,4 +32,12 @@ public interface RunCountService{
    * @return JsonResult
    */
   JsonResult getYearMonthScope();
+
+  /**
+   * 按年统计，统计每年12个月的数据
+   *
+   * @param queryVO 查询对象
+   * @return JsonResult
+   */
+  JsonResult countByYear(QueryRunVO queryVO);
 }

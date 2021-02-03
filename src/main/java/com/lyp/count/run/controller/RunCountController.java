@@ -66,9 +66,14 @@ public class RunCountController{
     return runCountService.countWeek(weekIndex);
   }
 
-  @PostMapping(value = "countByMonth")
+  @PostMapping(value = "countInOneMonth")
   public JsonResult countByMonth(@RequestBody QueryRunVO queryVO){
     return runCountService.countByMonth(queryVO);
+  }
+
+  @PostMapping(value = "countInOneYear")
+  public JsonResult countByYear(@RequestBody QueryRunVO queryVO){
+    return runCountService.countByYear(queryVO);
   }
 
 

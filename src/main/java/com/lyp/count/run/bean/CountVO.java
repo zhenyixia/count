@@ -6,9 +6,9 @@ import lombok.Data;
 @Data
 public class CountVO{
   /**
-   * 单位集合，如一周，则为：一，二，。。。，日；一月则为：1,2,3,...31等
+   * 单位集合，一月则为：1,2,3,...31等
    */
-  private List<String> units;
+  private List<Integer> units;
 
   /**
    * 对应单位的统计值，如一周，则为：1.2,3.4,0,0,0,0,0等，对应上面的单位
@@ -22,7 +22,7 @@ public class CountVO{
    */
   private int totalTimes;
 
-  public CountVO(List<String> units, List<String> kmList, String total){
+  public CountVO(List<Integer> units, List<String> kmList, String total){
     this.units = units;
     this.kmList = kmList;
     this.totalKms = total;
