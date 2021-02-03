@@ -23,4 +23,6 @@ public interface RunCountDao {
   int selectTotalRunTime(@Param("year") Integer year, @Param("month") Integer month);
 
   List<RunCountDetail> selectAllMonthByYear(QueryRunVO queryVO);
+
+  List<RunCountDetail> selectAlYearsData();
 }

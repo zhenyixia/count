@@ -48,8 +48,11 @@
 			(SELECT YEAR*100+MONTH yearMonth,YEAR FROM tbl_run_detail) t
 	</select>
 	<select id="selectTotalRunTime" resultType="java.lang.Integer">
-		SELECT  COUNT(id) FROM tbl_run_detail
-		where `year` =#{year}
+		SELECT COUNT(id) FROM tbl_run_detail
+		where 1=1
+		<if test="year != null">
+			and `year` =#{year}
+		</if>
 		<if test="month != null">
 			and `month` =#{month}
 		</if>
@@ -57,6 +60,9 @@
 	<select id="selectAllMonthByYear" resultType="com.lyp.count.run.bean.RunCountDetail">
 		select year,month,sum(kilometer) kilometer
 		from tbl_run_detail where year = #{year} group by month
+	</select>
+	<select id="selectAlYearsData" resultType="com.lyp.count.run.bean.RunCountDetail">
+		select year,sum(kilometer) kilometer from tbl_run_detail group by `year` order by year asc
 	</select>
 
 </mapper>

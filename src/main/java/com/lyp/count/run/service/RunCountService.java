@@ -24,7 +24,7 @@ public interface RunCountService{
    * @param queryRunVO 查询对象
    * @return JsonResult
    */
-  JsonResult countByMonth(QueryRunVO queryRunVO);
+  JsonResult countInOneMonth(QueryRunVO queryRunVO);
 
   /**
    * 获取年月的范围
@@ -39,5 +39,13 @@ public interface RunCountService{
    * @param queryVO 查询对象
    * @return JsonResult
    */
-  JsonResult countByYear(QueryRunVO queryVO);
+  JsonResult countInOneYear(QueryRunVO queryVO);
+
+
+  /**
+   * 统计所有年的数据
+   *
+   * @return JsonResult
+   */
+  JsonResult countAllYears();
 }

@@ -11,7 +11,6 @@ import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
 import javax.servlet.ServletOutputStream;
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.IOUtils;
@@ -67,13 +66,18 @@ public class RunCountController{
   }
 
   @PostMapping(value = "countInOneMonth")
-  public JsonResult countByMonth(@RequestBody QueryRunVO queryVO){
-    return runCountService.countByMonth(queryVO);
+  public JsonResult countInOneMonth(@RequestBody QueryRunVO queryVO){
+    return runCountService.countInOneMonth(queryVO);
   }
 
   @PostMapping(value = "countInOneYear")
-  public JsonResult countByYear(@RequestBody QueryRunVO queryVO){
-    return runCountService.countByYear(queryVO);
+  public JsonResult countInOneYear(@RequestBody QueryRunVO queryVO){
+    return runCountService.countInOneYear(queryVO);
+  }
+
+  @GetMapping(value = "countAllYears")
+  public JsonResult countAllYears(){
+    return runCountService.countAllYears();
   }
 
 

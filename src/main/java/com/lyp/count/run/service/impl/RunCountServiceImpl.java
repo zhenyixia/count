@@ -96,7 +96,7 @@ public class RunCountServiceImpl implements RunCountService{
   }
 
   @Override
-  public JsonResult countByMonth(QueryRunVO queryRunVO){
+  public JsonResult countInOneMonth(QueryRunVO queryRunVO){
     if(queryRunVO == null){
       return JsonResult.validFail("传参不能为空");
     }
@@ -129,7 +129,7 @@ public class RunCountServiceImpl implements RunCountService{
   }
 
   @Override
-  public JsonResult countByYear(QueryRunVO queryVO){
+  public JsonResult countInOneYear(QueryRunVO queryVO){
     log.info("Begin to count by year.");
     if(queryVO == null || queryVO.getYear() == 0){
       return JsonResult.validFail("没有传年份");
@@ -146,5 +146,16 @@ public class RunCountServiceImpl implements RunCountService{
     }catch(MyException e){
       return JsonResult.fail(e.getMessage());
     }
+  }
+
+  @Override
+  public JsonResult countAllYears(){
+    List<RunCountDetail> runCountDetails = runCountDao.selectAlYearsData();
+    CountVO countVO = SportUtils.processAllYears(runCountDetails);
+    int totalTime = runCountDao.selectTotalRunTime(null, null);
+    countVO.setTotalTimes(totalTime);
+
+    log.info("Count all month in one year successfully.");
+    return JsonResult.success("按月统计成功！", countVO);
   }
 }

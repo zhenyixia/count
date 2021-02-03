@@ -149,4 +149,19 @@ public class SportUtils{
 
     return new CountVO(units, kmList, totalKms.setScale(1, RoundingMode.HALF_UP).toString());
   }
+
+  public static CountVO processAllYears(List<RunCountDetail> runCountDetails){
+    List<Integer> allYears = new ArrayList<>();
+    List<String> kmList = new ArrayList<>();
+    BigDecimal totalKms = new BigDecimal(0);
+    for(RunCountDetail runCountDetail : runCountDetails){
+      int year = runCountDetail.getYear();
+      allYears.add(year);
+      BigDecimal kilometer = runCountDetail.getKilometer();
+      kmList.add(kilometer.toString());
+      totalKms = totalKms.add(kilometer);
+    }
+
+    return new CountVO(allYears, kmList, totalKms.setScale(1, RoundingMode.HALF_UP).toString());
+  }
 }
