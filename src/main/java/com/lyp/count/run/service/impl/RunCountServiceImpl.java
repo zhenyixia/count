@@ -152,10 +152,8 @@ public class RunCountServiceImpl implements RunCountService{
   public JsonResult countAllYears(){
     List<RunCountDetail> runCountDetails = runCountDao.selectAlYearsData();
     CountVO countVO = SportUtils.processAllYears(runCountDetails);
-    int totalTime = runCountDao.selectTotalRunTime(null, null);
-    countVO.setTotalTimes(totalTime);
 
-    log.info("Count all month in one year successfully.");
-    return JsonResult.success("按月统计成功！", countVO);
+    log.info("Count all years successfully.");
+    return JsonResult.success("统计所有年成功！", countVO);
   }
 }
