@@ -29,7 +29,7 @@ import org.springframework.web.multipart.MultipartFile;
 @Slf4j
 @Service
 public class RunCountServiceImpl implements RunCountService{
-  @Autowired
+  @Autowired(required = false)
   RunCountDao runCountDao;
 
   @Override
