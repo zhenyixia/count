@@ -110,5 +110,8 @@ public class RunCountController{
     return runCountService.getYearMonthScope();
   }
 
-
+  @GetMapping(value = "getExistedAddress")
+  public JsonResult getExistedAddress(){
+    return runCountService.getExistedAddress();
+  }
 }

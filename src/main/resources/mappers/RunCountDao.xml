@@ -31,7 +31,7 @@
 				and `month` = #{month}
 			</if>
 		</where>
-		order by year desc,month desc,day desc
+		order by year desc,month desc,day desc,update_time desc
 	</select>
 	<select id="selectSpecialWeek" resultType="java.lang.String">
 		select sum(kilometer) from tbl_run_detail
@@ -63,6 +63,9 @@
 	</select>
 	<select id="selectAlYearsData" resultType="com.lyp.count.run.bean.RunCountDetail">
 		select year,sum(kilometer) kilometer from tbl_run_detail group by `year` order by year asc
+	</select>
+	<select id="selectAddresses" resultType="java.lang.String">
+		select distinct address address from tbl_run_detail
 	</select>
 
 </mapper>

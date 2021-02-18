@@ -156,4 +156,11 @@ public class RunCountServiceImpl implements RunCountService{
     log.info("Count all years successfully.");
     return JsonResult.success("统计所有年成功！", countVO);
   }
+
+  @Override
+  public JsonResult getExistedAddress(){
+    log.info("Begin to query existed address.");
+    List<String> address = runCountDao.selectAddresses();
+    return  JsonResult.success("统计所有年成功！", address);
+  }
 }

@@ -25,4 +25,6 @@ public interface RunCountDao {
   List<RunCountDetail> selectAllMonthByYear(QueryRunVO queryVO);
 
   List<RunCountDetail> selectAlYearsData();
+
+  List<String> selectAddresses();
 }

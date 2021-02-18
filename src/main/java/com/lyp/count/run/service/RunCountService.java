@@ -42,11 +42,17 @@ public interface RunCountService{
    */
   JsonResult countInOneYear(QueryRunVO queryVO);
 
-
   /**
    * 统计所有年的数据
    *
    * @return JsonResult
    */
   JsonResult countAllYears();
+
+  /**
+   * 获取已存在的跑步地址
+   *
+   * @return JsonResult
+   */
+  JsonResult getExistedAddress();
 }
