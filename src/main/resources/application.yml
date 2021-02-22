@@ -14,11 +14,16 @@ spring:
     active: dev
 
   datasource:
-      username: root
-      password: ENC(ey/INZfInTEGpFnu23IabA==)
-      url: jdbc:mysql://localhost:3306/springboot01?serverTimeZone=UTC&characterEncoding=utf8
-      driver-class-name: com.mysql.jdbc.Driver
-
+        ds1:
+          username: root
+          password: ENC(ey/INZfInTEGpFnu23IabA==)
+          jdbc-url: jdbc:mysql://localhost:3306/springboot01?serverTimeZone=UTC&characterEncoding=utf8
+          driver-class-name: com.mysql.jdbc.Driver
+        ds2:
+          username: root
+          password: ENC(ey/INZfInTEGpFnu23IabA==)
+          jdbc-url: jdbc:mysql://localhost:3306/springboot02?serverTimeZone=UTC&characterEncoding=utf8
+          driver-class-name: com.mysql.jdbc.Driver
 
 pagehelper:
   # 是否启用分页合理化。

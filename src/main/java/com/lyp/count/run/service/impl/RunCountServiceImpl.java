@@ -13,6 +13,7 @@ import com.lyp.count.run.bean.RunDetailVO;
 import com.lyp.count.run.bean.YearMonthScopeVO;
 import com.lyp.count.run.constant.Common;
 import com.lyp.count.run.dao.RunCountDao;
+import com.lyp.count.run.db2dao.RunCountDB2Dao;
 import com.lyp.count.run.service.RunCountService;
 import com.lyp.count.run.util.SportUtils;
 import java.time.DayOfWeek;
@@ -32,10 +33,13 @@ public class RunCountServiceImpl implements RunCountService{
   @Autowired(required = false)
   RunCountDao runCountDao;
 
+  @Autowired(required = false)
+  RunCountDB2Dao runCountDB2Dao;
+
   @Override
   public JsonResult getList(QueryRunVO queryVO){
     Page pages = PageHelper.startPage(queryVO.getPageNum(), queryVO.getPageSize());
-    List<RunCountDetail> runCountDetails = runCountDao.selectByCondition();
+    List<RunCountDetail> runCountDetails = runCountDB2Dao.selectByCondition();
     log.info("Page totalKms:{}.", pages.getTotal());
     return JsonResult.success("查询成功", new PageInfo<>(runCountDetails));
   }
