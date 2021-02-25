@@ -1,8 +1,5 @@
 package com.lyp.count.run.service.impl;
 
-import com.github.pagehelper.Page;
-import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.PageInfo;
 import com.lyp.count.common.bean.JsonResult;
 import com.lyp.count.common.exception.MyException;
 import com.lyp.count.common.util.ExcelUtils;
@@ -19,7 +16,9 @@ import com.lyp.count.run.util.SportUtils;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.temporal.TemporalAdjusters;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,18 +29,26 @@ import org.springframework.web.multipart.MultipartFile;
 @Slf4j
 @Service
 public class RunCountServiceImpl implements RunCountService{
-  @Autowired(required = false)
+  @Autowired
   RunCountDao runCountDao;
 
-  @Autowired(required = false)
-  RunCountDB2Dao runCountDB2Dao;
+  @Autowired
+  RunCountDB2Dao runCountDao2;
 
   @Override
   public JsonResult getList(QueryRunVO queryVO){
-    Page pages = PageHelper.startPage(queryVO.getPageNum(), queryVO.getPageSize());
-    List<RunCountDetail> runCountDetails = runCountDB2Dao.selectByCondition();
-    log.info("Page totalKms:{}.", pages.getTotal());
-    return JsonResult.success("查询成功", new PageInfo<>(runCountDetails));
+    int beginIndex = (queryVO.getPageNum() - 1) * queryVO.getPageSize();
+    queryVO.setBeginIndex(beginIndex);
+
+    List<RunCountDetail> runCountDetails = runCountDao2.selectByCondition(queryVO);
+    int total = runCountDao2.countByCondition(queryVO);
+
+    Map<String, Object> result = new HashMap<>();
+    result.put("list", runCountDetails);
+    result.put("total", total);
+
+    log.info("Page totalKms:{}.", total);
+    return JsonResult.success("查询成功", result);
   }
 
   @Override
@@ -165,6 +172,6 @@ public class RunCountServiceImpl implements RunCountService{
   public JsonResult getExistedAddress(){
     log.info("Begin to query existed address.");
     List<String> address = runCountDao.selectAddresses();
-    return  JsonResult.success("统计所有年成功！", address);
+    return JsonResult.success("统计所有年成功！", address);
   }
 }

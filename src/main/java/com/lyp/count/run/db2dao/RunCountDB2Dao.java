@@ -10,7 +10,7 @@ import org.apache.ibatis.annotations.Param;
 @Mapper
 public interface RunCountDB2Dao{
 
-  List<RunCountDetail> selectByCondition();
+  List<RunCountDetail> selectByCondition(QueryRunVO queryVO);
 
   int batchInsert(List<RunCountDetail> runCountVOs);
 
@@ -27,4 +27,6 @@ public interface RunCountDB2Dao{
   List<RunCountDetail> selectAlYearsData();
 
   List<String> selectAddresses();
+
+  int countByCondition(QueryRunVO queryVO);
 }

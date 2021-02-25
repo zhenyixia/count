@@ -4,7 +4,6 @@ import com.lyp.count.common.bean.JsonResult;
 import com.lyp.count.run.bean.QueryRunVO;
 import com.lyp.count.run.bean.RunCountDetail;
 import com.lyp.count.run.service.RunCountService;
-import io.swagger.annotations.ApiOperation;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URLEncoder;
@@ -42,7 +41,6 @@ public class RunCountController{
    *
    * @return JsonResult
    */
-  @ApiOperation(value = "导入一周的跑步数据")
   @PostMapping(value = "import")
   public JsonResult importData(MultipartFile file){
     log.info("Begin to come in import data interface.");

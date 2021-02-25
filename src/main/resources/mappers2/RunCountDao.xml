@@ -24,14 +24,26 @@
 		<include refid="Base_Column_List"/>
 		from tbl_run_detail
 		<where>
-			<if test="year != null">
+			<if test="year != null and year != 0">
 				and `year` = #{year}
 			</if>
-			<if test="month != null">
+			<if test="month != null and month != 0">
 				and `month` = #{month}
 			</if>
 		</where>
 		order by year desc,month desc,day desc,update_time desc
+		limit #{beginIndex},#{pageSize}
+	</select>
+	<select id="countByCondition" resultType="java.lang.Integer">
+		select count(id) from tbl_run_detail
+		<where>
+			<if test="year != null and year != 0">
+				and `year` = #{year}
+			</if>
+			<if test="month != null and month != 0">
+				and `month` = #{month}
+			</if>
+		</where>
 	</select>
 	<select id="selectSpecialWeek" resultType="java.lang.String">
 		select sum(kilometer) from tbl_run_detail
