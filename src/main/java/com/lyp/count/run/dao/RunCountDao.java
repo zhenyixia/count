@@ -1,5 +1,6 @@
 package com.lyp.count.run.dao;
 
+import com.baomidou.dynamic.datasource.annotation.DS;
 import com.lyp.count.run.bean.QueryRunVO;
 import com.lyp.count.run.bean.RunCountDetail;
 import com.lyp.count.run.bean.YearMonthScopeVO;
@@ -8,9 +9,13 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 @Mapper
-public interface RunCountDao {
+public interface RunCountDao{
 
+  @DS("slave")
   List<RunCountDetail> selectByCondition(QueryRunVO queryVO);
+
+  @DS("slave")
+  int countByCondition(QueryRunVO queryVO);
 
   int batchInsert(List<RunCountDetail> runCountVOs);
 
@@ -27,6 +32,4 @@ public interface RunCountDao {
   List<RunCountDetail> selectAlYearsData();
 
   List<String> selectAddresses();
-
-  int countByCondition(QueryRunVO queryVO);
 }

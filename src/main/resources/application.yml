@@ -4,7 +4,7 @@ server:
   tomcat:
     uri-encoding: UTF-8
 
-mybatis:
+mybatis-plus:
   mapper-locations: classpath:mappers/*.xml
   type-aliases-package: com.lyp.count
   configuration:
@@ -17,15 +17,16 @@ spring:
   profiles:
     active: dev
   datasource:
-        ds1:
-          username: root
-          password: ENC(ey/INZfInTEGpFnu23IabA==)
-          jdbc-url: jdbc:mysql://localhost:3306/springboot01?serverTimeZone=UTC&characterEncoding=utf8
-          driver-class-name: com.mysql.jdbc.Driver
-          type: com.alibaba.druid.pool.DruidDataSource
-        ds2:
-          username: root
-          password: ENC(ey/INZfInTEGpFnu23IabA==)
-          jdbc-url: jdbc:mysql://localhost:3306/springboot02?serverTimeZone=UTC&characterEncoding=utf8
-          driver-class-name: com.mysql.jdbc.Driver
-          type: com.alibaba.druid.pool.DruidDataSource
+    dynamic:
+        primary: master
+        datasource:
+          master:
+            username: root
+            password: ENC(ey/INZfInTEGpFnu23IabA==)
+            url: jdbc:mysql://localhost:3306/springboot01?serverTimeZone=UTC&characterEncoding=utf8
+            driver-class-name: com.mysql.jdbc.Driver
+          slave:
+            username: root
+            password: ENC(ey/INZfInTEGpFnu23IabA==)
+            url: jdbc:mysql://localhost:3306/springboot02?serverTimeZone=UTC&characterEncoding=utf8
+            driver-class-name: com.mysql.jdbc.Driver

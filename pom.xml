@@ -24,13 +24,28 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
-		<!--boot 启动核心包包含了auto-configuration, logging and YAML-->
-		<!-- 最重要的是这个POM配置，MyBatis相关操作都在这个包中 -->
-		<dependency>
+
+		<!--mybatis plus引用，用于替换 mybatis-spring-boot-starter -->
+		<!--<dependency>
 			<groupId>org.mybatis.spring.boot</groupId>
 			<artifactId>mybatis-spring-boot-starter</artifactId>
 			<version>2.1.0</version>
+		</dependency>-->
+		<dependency>
+			<groupId>com.baomidou</groupId>
+			<artifactId>mybatis-plus-boot-starter</artifactId>
+			<version>3.2.0</version>
 		</dependency>
+		<dependency>
+			<groupId>com.baomidou</groupId>
+			<artifactId>dynamic-datasource-spring-boot-starter</artifactId>
+			<version>2.5.6</version>
+		</dependency>
+		<!--<dependency>-->
+			<!--<groupId>com.alibaba</groupId>-->
+			<!--<artifactId>druid-spring-boot-starter</artifactId>-->
+			<!--<version>1.1.20</version>-->
+		<!--</dependency>-->
 
 		<dependency>
 			<groupId>mysql</groupId>

@@ -1,5 +1,6 @@
 package com.lyp.count.run.service.impl;
 
+import com.baomidou.dynamic.datasource.annotation.DS;
 import com.lyp.count.common.bean.JsonResult;
 import com.lyp.count.common.exception.MyException;
 import com.lyp.count.common.util.ExcelUtils;
@@ -10,7 +11,6 @@ import com.lyp.count.run.bean.RunDetailVO;
 import com.lyp.count.run.bean.YearMonthScopeVO;
 import com.lyp.count.run.constant.Common;
 import com.lyp.count.run.dao.RunCountDao;
-import com.lyp.count.run.db2dao.RunCountDB2Dao;
 import com.lyp.count.run.service.RunCountService;
 import com.lyp.count.run.util.SportUtils;
 import java.time.DayOfWeek;
@@ -32,16 +32,13 @@ public class RunCountServiceImpl implements RunCountService{
   @Autowired
   RunCountDao runCountDao;
 
-  @Autowired
-  RunCountDB2Dao runCountDao2;
-
   @Override
   public JsonResult getList(QueryRunVO queryVO){
     int beginIndex = (queryVO.getPageNum() - 1) * queryVO.getPageSize();
     queryVO.setBeginIndex(beginIndex);
 
-    List<RunCountDetail> runCountDetails = runCountDao2.selectByCondition(queryVO);
-    int total = runCountDao2.countByCondition(queryVO);
+    List<RunCountDetail> runCountDetails = runCountDao.selectByCondition(queryVO);
+    int total = runCountDao.countByCondition(queryVO);
 
     Map<String, Object> result = new HashMap<>();
     result.put("list", runCountDetails);
