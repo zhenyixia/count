@@ -32,5 +32,5 @@ build/
 ### VS Code ###
 .vscode/
 *.db
-
+classpath
 src/main/**/application-dev.yml

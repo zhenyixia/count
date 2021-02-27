@@ -42,9 +42,9 @@
 			<version>2.5.6</version>
 		</dependency>
 		<!--<dependency>-->
-			<!--<groupId>com.alibaba</groupId>-->
-			<!--<artifactId>druid-spring-boot-starter</artifactId>-->
-			<!--<version>1.1.20</version>-->
+		<!--<groupId>com.alibaba</groupId>-->
+		<!--<artifactId>druid-spring-boot-starter</artifactId>-->
+		<!--<version>1.1.20</version>-->
 		<!--</dependency>-->
 
 		<dependency>
@@ -215,17 +215,47 @@
 		<!--这里写上打成jar包的名称-->
 		<finalName>runCount</finalName>
 		<plugins>
+			<!-- 使用assembly插件打可运行jar和tar.gz包 -->
 			<plugin>
-				<groupId>org.springframework.boot</groupId>
-				<artifactId>spring-boot-maven-plugin</artifactId>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jar-plugin</artifactId>
 				<configuration>
-					<!--这里写上main方法所在类的路径-->
-					<mainClass>com.lyp.count.CountApplication</mainClass>
+					<archive>
+						<manifest>
+							<!-- 工程主入口 -->
+							<mainClass>com.lyp.count.CountApplication</mainClass>
+							<addClasspath>true</addClasspath>
+							<!-- 此处如果设置，会在Manifest.MF文件中的引入jar包前加上此前缀，此处我注释掉了，否则可运行jar要放在lib同级目录而不是lib里面 -->
+							 <classpathPrefix>lib/</classpathPrefix>
+						</manifest>
+						<manifestEntries>
+							<Class-Path>./</Class-Path>
+						</manifestEntries>
+					</archive>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-assembly-plugin</artifactId>
+				<version>3.1.0</version>
+				<configuration>
+					<finalName>${project.name}</finalName>
+					<!-- 不添加assembly的id到打包后的文件名称中 -->
+					<appendAssemblyId>false</appendAssemblyId>
+					<!--   这个是assembly 所在位置  -->
+					<descriptors>
+						<descriptor>src/main/resources/assembly.xml</descriptor>
+					</descriptors>
 				</configuration>
 				<executions>
 					<execution>
+						<!--命名随意-->
+						<id>make-assembly</id>
+						<!--绑定到package生命周期阶段上-->
+						<phase>package</phase>
 						<goals>
-							<goal>repackage</goal>
+							<!--goal只有两种参数： single 与 help-->
+							<goal>single</goal>
 						</goals>
 					</execution>
 				</executions>
