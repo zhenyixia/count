@@ -11,10 +11,8 @@ import org.apache.ibatis.annotations.Param;
 @Mapper
 public interface RunCountDao{
 
-  @DS("slave")
   List<RunCountDetail> selectByCondition(QueryRunVO queryVO);
 
-  @DS("slave")
   int countByCondition(QueryRunVO queryVO);
 
   int batchInsert(List<RunCountDetail> runCountVOs);
