@@ -226,7 +226,7 @@
 							<mainClass>com.lyp.count.CountApplication</mainClass>
 							<addClasspath>true</addClasspath>
 							<!-- 此处如果设置，会在Manifest.MF文件中的引入jar包前加上此前缀，此处我注释掉了，否则可运行jar要放在lib同级目录而不是lib里面 -->
-							 <classpathPrefix>lib/</classpathPrefix>
+							 <!--<classpathPrefix>lib/</classpathPrefix>-->
 						</manifest>
 						<manifestEntries>
 							<Class-Path>./</Class-Path>
@@ -239,7 +239,7 @@
 				<artifactId>maven-assembly-plugin</artifactId>
 				<version>3.1.0</version>
 				<configuration>
-					<finalName>${project.name}</finalName>
+					<finalName>runCount</finalName>
 					<!-- 不添加assembly的id到打包后的文件名称中 -->
 					<appendAssemblyId>false</appendAssemblyId>
 					<!--   这个是assembly 所在位置  -->
