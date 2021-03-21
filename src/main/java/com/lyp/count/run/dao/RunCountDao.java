@@ -1,9 +1,8 @@
 package com.lyp.count.run.dao;
 
-import com.baomidou.dynamic.datasource.annotation.DS;
 import com.lyp.count.run.bean.QueryRunVO;
 import com.lyp.count.run.bean.RunCountDetail;
-import com.lyp.count.run.bean.YearMonthScopeVO;
+import com.lyp.count.common.bean.YearMonthScopeVO;
 import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;

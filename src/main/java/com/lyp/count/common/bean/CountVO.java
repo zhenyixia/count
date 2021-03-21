@@ -1,4 +1,4 @@
-package com.lyp.count.run.bean;
+package com.lyp.count.common.bean;
 
 import java.util.List;
 import lombok.Data;
@@ -13,18 +13,18 @@ public class CountVO{
   /**
    * 对应单位的统计值，如一周，则为：1.2,3.4,0,0,0,0,0等，对应上面的单位
    */
-  private List<String> kmList;
+  private List<String> valueList;
 
-  private String totalKms;
+  private String total;
 
   /**
    * 总运动次数
    */
   private int totalTimes;
 
-  public CountVO(List<Integer> units, List<String> kmList, String total){
+  public CountVO(List<Integer> units, List<String> valueList, String total){
     this.units = units;
-    this.kmList = kmList;
-    this.totalKms = total;
+    this.valueList = valueList;
+    this.total = total;
   }
 }

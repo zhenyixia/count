@@ -1,4 +1,4 @@
-package com.lyp.count.run.bean;
+package com.lyp.count.common.bean;
 
 /**
  * 年月范围对象

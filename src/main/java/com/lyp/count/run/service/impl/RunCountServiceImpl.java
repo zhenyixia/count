@@ -1,14 +1,13 @@
 package com.lyp.count.run.service.impl;
 
-import com.baomidou.dynamic.datasource.annotation.DS;
 import com.lyp.count.common.bean.JsonResult;
 import com.lyp.count.common.exception.MyException;
 import com.lyp.count.common.util.ExcelUtils;
-import com.lyp.count.run.bean.CountVO;
+import com.lyp.count.common.bean.CountVO;
 import com.lyp.count.run.bean.QueryRunVO;
 import com.lyp.count.run.bean.RunCountDetail;
 import com.lyp.count.run.bean.RunDetailVO;
-import com.lyp.count.run.bean.YearMonthScopeVO;
+import com.lyp.count.common.bean.YearMonthScopeVO;
 import com.lyp.count.run.constant.Common;
 import com.lyp.count.run.dao.RunCountDao;
 import com.lyp.count.run.service.RunCountService;
@@ -44,7 +43,7 @@ public class RunCountServiceImpl implements RunCountService{
     result.put("list", runCountDetails);
     result.put("total", total);
 
-    log.info("Page totalKms:{}.", total);
+    log.info("Page total:{}.", total);
     return JsonResult.success("查询成功", result);
   }
 

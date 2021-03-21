@@ -1,7 +1,7 @@
 package com.lyp.count.run.util;
 
 import com.lyp.count.common.exception.MyException;
-import com.lyp.count.run.bean.CountVO;
+import com.lyp.count.common.bean.CountVO;
 import com.lyp.count.run.bean.RunCountDetail;
 import com.lyp.count.run.bean.RunDetailVO;
 import com.lyp.count.run.bean.WeekDay;
@@ -92,6 +92,13 @@ public class SportUtils{
     System.out.println(weekDay);
   }
 
+  /**
+   * 处理月度统计数据，返回当前月运动的天，如1，2，16，31，及对应每天的运动里程。并计算总和。
+   *
+   * @param countVOS 查询出的结果集
+   * @return 统计对象
+   * @throws MyException 异常
+   */
   public static CountVO processMonthCount(List<RunCountDetail> countVOS) throws MyException{
     LocalDate now = LocalDate.now();
     if(!CollectionUtils.isEmpty(countVOS)){
