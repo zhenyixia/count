@@ -47,8 +47,9 @@ public class LearnCountController{
 
   // http://127.0.0.1:8081/run/countWeek?weekIndex=0
   @GetMapping(value = "countWeek")
-  public JsonResult countWeek(@RequestParam(value = "weekIndex") int weekIndex){
-    return learnCountService.countWeek(weekIndex);
+  public JsonResult countWeek(@RequestParam(value = "weekIndex") int weekIndex,
+      @RequestParam(value = "learnContent") String learnContent){
+    return learnCountService.countWeek(weekIndex,learnContent);
   }
 
   @PostMapping(value = "countInOneMonth")

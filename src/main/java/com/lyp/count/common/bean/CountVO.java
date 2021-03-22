@@ -22,6 +22,11 @@ public class CountVO{
    */
   private int totalTimes;
 
+  /**
+   * 一周，周一到周天的时间范围
+   */
+  private String weekDayScope;
+
   public CountVO(List<Integer> units, List<String> valueList, String total){
     this.units = units;
     this.valueList = valueList;

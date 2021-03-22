@@ -34,4 +34,8 @@ public interface LearnCountDao{
   YearMonthScopeVO selectYearMonthScope();
 
   List<String> selectContent();
+
+  List<LearnCountDetail> selectSpecialWeek(@Param("mondayDay") String mondayDay, @Param("sundayDay") String sundayDay, @Param("learnContent") String learnContent);
+
+  int countSpecialWeek(@Param("mondayDay") String mondayDay, @Param("sundayDay") String sundayDay, @Param("learnContent") String learnContent);
 }

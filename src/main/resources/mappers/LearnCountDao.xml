@@ -70,8 +70,28 @@
 		select year,sum(learn_hours) learnHours from tbl_learn_detail group by `year` order by year asc
 	</select>
 
+	<!--按时间倒序取最近学习的内容-->
 	<select id="selectContent" resultType="java.lang.String">
-		select distinct learn_content from tbl_learn_detail order by learn_content
+		select learn_content learnContent  FROM
+		(select  learn_content,max(update_time) update_time from tbl_learn_detail group BY learn_content) t
+		ORDER BY update_time desc
+	</select>
+	<select id="selectSpecialWeek" resultType="com.lyp.count.learn.bean.LearnCountDetail">
+		select sum(learn_hours) learnHours,week_day weekDay from tbl_learn_detail
+		where strftime('%Y-%m-%d',learn_date) &gt;= strftime('%Y-%m-%d',#{mondayDay})
+		and date(learn_date) &lt;=	date(#{sundayDay})
+		<if test="learnContent != null and learnContent != ''.toString()">
+			and learn_content = #{learnContent}
+		</if>
+		group by learn_date
+	</select>
+	<select id="countSpecialWeek" resultType="java.lang.Integer">
+		select count(id) from tbl_learn_detail
+		where strftime('%Y-%m-%d',learn_date) &gt;= strftime('%Y-%m-%d',#{mondayDay})
+		and date(learn_date) &lt;=	date(#{sundayDay})
+		<if test="learnContent != null and learnContent != ''.toString()">
+			and learn_content = #{learnContent}
+		</if>
 	</select>
 
 </mapper>

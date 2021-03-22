@@ -55,6 +55,7 @@ public class SportUtils{
 
   public static void setTimeInfo(RunCountDetail runCountDetail, String runDateStr){
     LocalDate runDate = LocalDate.parse(runDateStr, dtf);
+    runCountDetail.setRunDate(runDate.toString());
     runCountDetail.setYear(runDate.getYear());
     runCountDetail.setMonth(runDate.getMonthValue());
     runCountDetail.setDay(runDate.getDayOfMonth());

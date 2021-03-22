@@ -11,7 +11,7 @@ public interface LearnCountService{
 
   JsonResult getList(QueryLearnVO queryVO);
 
-  JsonResult countWeek(int weekIndex);
+  JsonResult countWeek(int weekIndex, String learnContent);
 
   JsonResult countInOneMonth(QueryLearnVO queryVO);
 

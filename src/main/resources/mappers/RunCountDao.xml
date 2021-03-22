@@ -45,10 +45,14 @@
 			</if>
 		</where>
 	</select>
-	<select id="selectSpecialWeek" resultType="java.lang.String">
-		select sum(kilometer) from tbl_run_detail
-		where run_date &gt;= #{specialMonday} and run_date &lt;= #{specialSunday}
+	<select id="selectSpecialWeek" resultType="com.lyp.count.run.bean.RunCountDetail">
+		select sum(kilometer) kilometer,week_day weekDay from tbl_run_detail
+		where date(run_date) &gt;= date(#{specialMonday}) and date(run_date) &lt;= date(#{specialSunday})
 		group by run_date
+	</select>
+	<select id="countSpecialWeek" resultType="java.lang.Integer">
+		select count(id) from tbl_run_detail
+		where date(run_date) &gt;= date(#{specialMonday}) and date(run_date) &lt;= date(#{specialSunday})
 	</select>
 	<select id="countByMonth" resultType="com.lyp.count.run.bean.RunCountDetail">
 		SELECT sum(kilometer) kilometer, `year`, `month`, `day`, run_date FROM tbl_run_detail
@@ -79,5 +83,6 @@
 	<select id="selectAddresses" resultType="java.lang.String">
 		select distinct address address from tbl_run_detail
 	</select>
+
 
 </mapper>

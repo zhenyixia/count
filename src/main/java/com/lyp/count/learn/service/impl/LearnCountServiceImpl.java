@@ -1,14 +1,24 @@
 package com.lyp.count.learn.service.impl;
 
+import com.lyp.count.common.bean.CountVO;
 import com.lyp.count.common.bean.JsonResult;
+import com.lyp.count.common.bean.YearMonthScopeVO;
 import com.lyp.count.common.exception.MyException;
 import com.lyp.count.learn.bean.LearnCountDetail;
 import com.lyp.count.learn.bean.QueryLearnVO;
 import com.lyp.count.learn.dao.LearnCountDao;
 import com.lyp.count.learn.service.LearnCountService;
 import com.lyp.count.learn.util.LearnUtils;
-import com.lyp.count.common.bean.CountVO;
-import com.lyp.count.common.bean.YearMonthScopeVO;
+import com.lyp.count.run.bean.WeekDay;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.time.DayOfWeek;
+import java.time.LocalDate;
+import java.time.MonthDay;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.TemporalAdjusters;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -23,6 +33,8 @@ public class LearnCountServiceImpl implements LearnCountService{
 
   @Autowired
   LearnCountDao learnCountDao;
+
+  DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
   @Override
   public JsonResult add(List<LearnCountDetail> countVOs){
@@ -56,8 +68,45 @@ public class LearnCountServiceImpl implements LearnCountService{
   }
 
   @Override
-  public JsonResult countWeek(int weekIndex){
-    return null;
+  public JsonResult countWeek(int weekIndex, String learnContent){
+    if(weekIndex > 0){
+      return JsonResult.validFail("参数非法");
+    }
+
+    if("init".equals(learnContent)){
+      List<String> scopeVO = learnCountDao.selectContent();
+      learnContent = scopeVO.get(0);
+    }
+
+    // 获取当前周的周一的日期
+    LocalDate currentWeekStartDay = LocalDate.now().with(TemporalAdjusters.previous(DayOfWeek.SUNDAY)).plusDays(1);
+
+    // 获取上一周或几周的周一的日期
+    LocalDate specialMonday = currentWeekStartDay.plusWeeks(weekIndex);
+    LocalDate specialSunday = specialMonday.plusDays(6);
+    List<LearnCountDetail> oneWeekCount = learnCountDao
+        .selectSpecialWeek(specialMonday.format(dtf), specialSunday.format(dtf), learnContent);
+    String fromMonthDay = MonthDay.from(specialMonday).format(DateTimeFormatter.ofPattern("MM-dd"));
+    String toMonthDay = MonthDay.from(specialSunday).format(DateTimeFormatter.ofPattern("MM-dd"));
+
+    BigDecimal totalKms = new BigDecimal(0);
+    // List<Integer> units = new ArrayList<>();
+    List<String> values = new ArrayList<>(Collections.nCopies(7, "0"));
+    for(LearnCountDetail detailVO : oneWeekCount){
+      totalKms = totalKms.add(detailVO.getLearnHours());
+      String weekDay = detailVO.getWeekDay();
+      int ordinal = WeekDay.nameOf(weekDay).ordinal();
+      values.set(ordinal, detailVO.getLearnHours().toString());
+    }
+
+    totalKms.setScale(2, RoundingMode.HALF_UP);
+    String weekDayScope = fromMonthDay + " ~ " + toMonthDay;
+    CountVO response = new CountVO(null, values, totalKms.toString());
+    response.setWeekDayScope(weekDayScope.replace("-", "/"));
+
+    int totalNum = learnCountDao.countSpecialWeek(specialMonday.format(dtf), specialSunday.format(dtf), learnContent);
+    response.setTotalTimes(totalNum);
+    return JsonResult.success("查询成功", response);
   }
 
   @Override

@@ -23,6 +23,7 @@ public class LearnUtils{
 
   public static void setTimeInfo(LearnCountDetail learnCountDetail, String learnDate){
     LocalDate runDate = LocalDate.parse(learnDate, dtf);
+    learnCountDetail.setLearnDate(runDate.toString());
     learnCountDetail.setMonth(runDate.getMonthValue());
     learnCountDetail.setYear(runDate.getYear());
     learnCountDetail.setDay(runDate.getDayOfMonth());

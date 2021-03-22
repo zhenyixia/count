@@ -22,6 +22,9 @@ public class QueryRunVO extends Page{
 
   private Integer month;
 
+  /**
+   * -1代表上一周，-2代表上上周，0代表当前周
+   */
   private Integer week;
 
   private Date createTime;

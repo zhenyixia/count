@@ -58,7 +58,7 @@ public class RunCountController{
   }
 
   // http://127.0.0.1:8081/run/countWeek?weekIndex=0
-  @GetMapping(value = "countWeek")
+  @GetMapping(value = "countInOneWeek")
   public JsonResult countWeek(@RequestParam(value = "weekIndex") int weekIndex){
     return runCountService.countWeek(weekIndex);
   }

@@ -1,20 +1,27 @@
 package com.lyp.count.run.service.impl;
 
+import com.lyp.count.common.bean.CountVO;
 import com.lyp.count.common.bean.JsonResult;
+import com.lyp.count.common.bean.YearMonthScopeVO;
 import com.lyp.count.common.exception.MyException;
 import com.lyp.count.common.util.ExcelUtils;
-import com.lyp.count.common.bean.CountVO;
 import com.lyp.count.run.bean.QueryRunVO;
 import com.lyp.count.run.bean.RunCountDetail;
 import com.lyp.count.run.bean.RunDetailVO;
-import com.lyp.count.common.bean.YearMonthScopeVO;
+import com.lyp.count.run.bean.WeekDay;
 import com.lyp.count.run.constant.Common;
 import com.lyp.count.run.dao.RunCountDao;
 import com.lyp.count.run.service.RunCountService;
 import com.lyp.count.run.util.SportUtils;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
+import java.time.MonthDay;
+import java.time.format.DateTimeFormatter;
 import java.time.temporal.TemporalAdjusters;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -30,6 +37,8 @@ import org.springframework.web.multipart.MultipartFile;
 public class RunCountServiceImpl implements RunCountService{
   @Autowired
   RunCountDao runCountDao;
+
+  DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
   @Override
   public JsonResult getList(QueryRunVO queryVO){
@@ -87,7 +96,7 @@ public class RunCountServiceImpl implements RunCountService{
 
   @Override
   public JsonResult countWeek(int weekIndex){
-    if(weekIndex < 0){
+    if(weekIndex > 0){
       return JsonResult.validFail("参数非法");
     }
 
@@ -95,11 +104,30 @@ public class RunCountServiceImpl implements RunCountService{
     LocalDate currentWeekStartDay = LocalDate.now().with(TemporalAdjusters.previous(DayOfWeek.SUNDAY)).plusDays(1);
 
     // 获取上一周或几周的周一的日期
-    LocalDate specialMonday = currentWeekStartDay.minusWeeks(weekIndex);
+    LocalDate specialMonday = currentWeekStartDay.plusWeeks(weekIndex);
     LocalDate specialSunday = specialMonday.plusDays(6);
-    List<String> oneWeekCount = runCountDao.selectSpecialWeek(specialMonday.toString(), specialSunday.toString());
+    List<RunCountDetail> oneWeekCount = runCountDao.selectSpecialWeek(specialMonday.format(dtf), specialSunday.format(dtf));
+    String fromMonthDay = MonthDay.from(specialMonday).format(DateTimeFormatter.ofPattern("MM-dd"));
+    String toMonthDay = MonthDay.from(specialSunday).format(DateTimeFormatter.ofPattern("MM-dd"));
 
-    return JsonResult.success("查询成功", oneWeekCount);
+    BigDecimal totalKms = new BigDecimal(0);
+    // List<Integer> units = new ArrayList<>();
+    List<String> values = new ArrayList<>(Collections.nCopies(7, "0"));
+    for(RunCountDetail detailVO : oneWeekCount){
+      totalKms = totalKms.add(detailVO.getKilometer());
+      String weekDay = detailVO.getWeekDay();
+      int ordinal = WeekDay.nameOf(weekDay).ordinal();
+      values.set(ordinal, detailVO.getKilometer().toString());
+    }
+
+    totalKms.setScale(2, RoundingMode.HALF_UP);
+    String weekDayScope = fromMonthDay + " ~ " + toMonthDay;
+    CountVO response = new CountVO(null, values, totalKms.toString());
+    response.setWeekDayScope(weekDayScope.replace("-", "/"));
+
+    int totalNum = runCountDao.countSpecialWeek(specialMonday.format(dtf), specialSunday.format(dtf));
+    response.setTotalTimes(totalNum);
+    return JsonResult.success("查询成功", response);
   }
 
   @Override

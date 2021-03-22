@@ -16,7 +16,7 @@ public interface RunCountDao{
 
   int batchInsert(List<RunCountDetail> runCountVOs);
 
-  List<String> selectSpecialWeek(@Param("specialMonday") String specialMonday, @Param("specialSunday") String specialSunday);
+  List<RunCountDetail> selectSpecialWeek(@Param("specialMonday") String specialMonday, @Param("specialSunday") String specialSunday);
 
   List<RunCountDetail> countByMonth(@Param("year") Integer year, @Param("month") Integer month);
 
@@ -29,4 +29,6 @@ public interface RunCountDao{
   List<RunCountDetail> selectAlYearsData();
 
   List<String> selectAddresses();
+
+  int countSpecialWeek(@Param("specialMonday") String specialMonday, @Param("specialSunday") String specialSunday);
 }

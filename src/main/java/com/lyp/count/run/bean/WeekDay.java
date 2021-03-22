@@ -13,4 +13,24 @@ public enum WeekDay{
     return name;
   }
 
+  public static String[] names(){
+    WeekDay[] values = WeekDay.values();
+    String[] names = new String[values.length];
+    for(int i = 0; i < values.length; i++){
+      names[i] = values[i].getName();
+    }
+    return names;
+  }
+
+  public static WeekDay nameOf(String name){
+    WeekDay[] values = WeekDay.values();
+    for(WeekDay value : values){
+      if(value.getName().equals(name)){
+        return value;
+      }
+    }
+
+    throw new IllegalArgumentException(name + "非法！");
+  }
+
 }
