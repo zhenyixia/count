@@ -116,7 +116,7 @@ public class LearnCountServiceImpl implements LearnCountService{
     }
 
     Integer year = queryVO.getYear();
-    Integer month = queryVO.getMonth();
+    Integer month = queryVO.getMongitth();
     if(year == null || month == null){
       return JsonResult.validFail("年份和月份居必传");
     }
