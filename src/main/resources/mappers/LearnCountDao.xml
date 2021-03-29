@@ -16,6 +16,19 @@
 		</foreach>
 	</insert>
 
+	<sql id="QueryCondition">
+		<if test="year != null and year != 0">
+			and `year` = #{year}
+		</if>
+		<if test="month != null and month != 0">
+			and `month` = #{month}
+		</if>
+		<if test="learnContent != null and learnContent != ''.toString()">
+			and learn_content = #{learnContent}
+		</if>
+	</sql>
+
+
 	<select id="selectByCondition" resultType="com.lyp.count.learn.bean.LearnCountDetail">
 		select
 		<include refid="Base_Column_List"/>
@@ -40,12 +53,14 @@
 			<if test="month != null and month != 0">
 				and `month` = #{month}
 			</if>
+
 		</where>
 	</select>
 
 	<select id="countByMonth" resultType="com.lyp.count.learn.bean.LearnCountDetail">
 		SELECT sum(learn_hours) learnHours, `year`, `month`, `day`, learn_date FROM tbl_learn_detail
-		where `year` =#{year} and `month` =#{month}
+		where  1 = 1
+		<include refid="QueryCondition"/>
 		group BY DAY
 	</select>
 	<select id="selectYearMonthScope" resultType="com.lyp.count.common.bean.YearMonthScopeVO">
@@ -55,12 +70,7 @@
 	<select id="selectTotalLearnTime" resultType="java.lang.Integer">
 		SELECT COUNT(id) FROM tbl_learn_detail
 		where 1=1
-		<if test="year != null">
-			and `year` =#{year}
-		</if>
-		<if test="month != null">
-			and `month` =#{month}
-		</if>
+		<include refid="QueryCondition"/>
 	</select>
 	<select id="selectAllMonthByYear" resultType="com.lyp.count.learn.bean.LearnCountDetail">
 		select year,month,sum(learn_hours) learnHours

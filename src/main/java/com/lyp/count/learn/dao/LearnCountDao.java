@@ -16,7 +16,7 @@ public interface LearnCountDao{
 
   int countByCondition(QueryLearnVO queryVO);
 
-  List<LearnCountDetail> countByMonth(@Param("year") Integer year, @Param("month") Integer month);
+  List<LearnCountDetail> countByMonth(QueryLearnVO queryVO);
 
   /**
    * 总的学习次数
@@ -25,7 +25,7 @@ public interface LearnCountDao{
    * @param month 月
    * @return 次数
    */
-  int selectTotalLearnTime(@Param("year") Integer year, @Param("month") Integer month);
+  int selectTotalLearnTime(QueryLearnVO queryVO);
 
   List<LearnCountDetail> selectAllMonthByYear(QueryLearnVO queryVO);
 

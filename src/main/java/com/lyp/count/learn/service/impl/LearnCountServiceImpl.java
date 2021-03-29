@@ -116,15 +116,21 @@ public class LearnCountServiceImpl implements LearnCountService{
     }
 
     Integer year = queryVO.getYear();
-    Integer month = queryVO.getMongitth();
+    Integer month = queryVO.getMonth();
     if(year == null || month == null){
       return JsonResult.validFail("年份和月份居必传");
     }
+    String learnContent = queryVO.getLearnContent();
+    if("init".equals(learnContent)){
+      List<String> scopeVO = learnCountDao.selectContent();
+      learnContent = scopeVO.get(0);
+      queryVO.setLearnContent(learnContent);
+    }
 
-    List<LearnCountDetail> countVOS = learnCountDao.countByMonth(year, month);
+    List<LearnCountDetail> countVOS = learnCountDao.countByMonth(queryVO);
     try{
       CountVO countVO = LearnUtils.processMonthCount(countVOS);
-      int totalTime = learnCountDao.selectTotalLearnTime(year, month);
+      int totalTime = learnCountDao.selectTotalLearnTime(queryVO);
       countVO.setTotalTimes(totalTime);
       return JsonResult.success("按月统计成功！", countVO);
     }catch(MyException e){
@@ -142,7 +148,7 @@ public class LearnCountServiceImpl implements LearnCountService{
     List<LearnCountDetail> runCountDetails = learnCountDao.selectAllMonthByYear(queryVO);
     try{
       CountVO countVO = LearnUtils.processYearCount(runCountDetails);
-      int totalTime = learnCountDao.selectTotalLearnTime(queryVO.getYear(), null);
+      int totalTime = learnCountDao.selectTotalLearnTime(queryVO);
       countVO.setTotalTimes(totalTime);
 
       log.info("Count all month in one year successfully.");
