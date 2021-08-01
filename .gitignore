@@ -34,3 +34,4 @@ build/
 *.db
 classpath
 src/main/**/application-dev.yml
+/src/main/java/com/lyp/count/TempTest.java

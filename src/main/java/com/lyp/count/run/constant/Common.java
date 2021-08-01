@@ -1,6 +1,6 @@
 package com.lyp.count.run.constant;
 
-public class Common{
+public class  Common{
   private Common(){
   }
 

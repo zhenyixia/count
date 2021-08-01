@@ -123,6 +123,12 @@
 			<version>2.1.0</version>
 		</dependency>
 
+		<dependency>
+			<groupId>com.alibaba</groupId>
+			<artifactId>fastjson</artifactId>
+			<version>1.2.9</version>
+		</dependency>
+
 		<!-- 分页插件 -->
 		<!-- <dependency>
 				 <groupId>com.github.pagehelper</groupId>
@@ -143,7 +149,7 @@
 				<artifactId>spring-boot-starter-data-redis</artifactId>
 			</dependency>-->
 
-		<!--<dependency>
+		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
@@ -153,13 +159,13 @@
 					<artifactId>junit-vintage-engine</artifactId>
 				</exclusion>
 			</exclusions>
-		</dependency>-->
+		</dependency>
 
-		<!--<dependency>
+		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
 			<version>4.12</version>
-		</dependency>-->
+		</dependency>
 
 		<!--Thymeleaf是一种用于Web和独立环境的现代服务器端的Java模板引擎。-->
 		<!--Thymeleaf的主要目标是将优雅的自然模板带到开发工作流程中，并将HTML在浏览器中正确显示，并且可以作为静态原型，让开发团队能更容易地协作。Thymeleaf能够处理HTML，XML，JavaScript，CSS甚至纯文本。-->
